@@ -1,0 +1,230 @@
+{
+  "id": "1c54a3d6-4ee4-42f9-bc07-5c7b17bfa3f5",
+  "prevId": "9ac308c0-21a5-48ff-ad4a-18ce486fa225",
+  "version": "5",
+  "dialect": "pg",
+  "tables": {
+    "tastings": {
+      "name": "tastings",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "host_id": {
+          "name": "host_id",
+          "type": "varchar(32)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "date": {
+          "name": "date",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "blind": {
+          "name": "blind",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": false
+        },
+        "description": {
+          "name": "description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ready_for_signup": {
+          "name": "ready_for_signup",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "tastings_host_id_users_id_fk": {
+          "name": "tastings_host_id_users_id_fk",
+          "tableFrom": "tastings",
+          "tableTo": "users",
+          "columnsFrom": [
+            "host_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "tastings_whiskeys": {
+      "name": "tastings_whiskeys",
+      "schema": "",
+      "columns": {
+        "tasting_id": {
+          "name": "tasting_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "whiskey_id": {
+          "name": "whiskey_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "tastings_whiskeys_tasting_id_tastings_id_fk": {
+          "name": "tastings_whiskeys_tasting_id_tastings_id_fk",
+          "tableFrom": "tastings_whiskeys",
+          "tableTo": "tastings",
+          "columnsFrom": [
+            "tasting_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "tastings_whiskeys_whiskey_id_whiskeys_id_fk": {
+          "name": "tastings_whiskeys_whiskey_id_whiskeys_id_fk",
+          "tableFrom": "tastings_whiskeys",
+          "tableTo": "whiskeys",
+          "columnsFrom": [
+            "whiskey_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "tastings_whiskeys_tasting_id_whiskey_id_pk": {
+          "name": "tastings_whiskeys_tasting_id_whiskey_id_pk",
+          "columns": [
+            "tasting_id",
+            "whiskey_id"
+          ]
+        }
+      },
+      "uniqueConstraints": {}
+    },
+    "users": {
+      "name": "users",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "varchar(32)",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "first_name": {
+          "name": "first_name",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "last_name": {
+          "name": "last_name",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "admin": {
+          "name": "admin",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "whiskeys": {
+      "name": "whiskeys",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "age_statement": {
+          "name": "age_statement",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "distillery": {
+          "name": "distillery",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "abv": {
+          "name": "abv",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "default": 0
+        },
+        "msrp": {
+          "name": "msrp",
+          "type": "numeric(4, 2)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "mash_bill": {
+          "name": "mash_bill",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    }
+  },
+  "enums": {},
+  "schemas": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}

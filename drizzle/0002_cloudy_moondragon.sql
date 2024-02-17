@@ -1,0 +1,1 @@
+ALTER TABLE "tastings" ADD COLUMN "description" text;

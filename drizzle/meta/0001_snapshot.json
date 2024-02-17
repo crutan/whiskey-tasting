@@ -1,0 +1,105 @@
+{
+  "id": "e4f452b8-58cc-4a59-b30b-0f6fc5dea70d",
+  "prevId": "5ba1ace6-232a-4c3c-ba0c-9b244b06fe1b",
+  "version": "5",
+  "dialect": "pg",
+  "tables": {
+    "tastings": {
+      "name": "tastings",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "host_id": {
+          "name": "host_id",
+          "type": "varchar(32)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "date": {
+          "name": "date",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "false": {
+          "name": "false",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "tastings_host_id_users_id_fk": {
+          "name": "tastings_host_id_users_id_fk",
+          "tableFrom": "tastings",
+          "tableTo": "users",
+          "columnsFrom": [
+            "host_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "users": {
+      "name": "users",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "varchar(32)",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "first_name": {
+          "name": "first_name",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "last_name": {
+          "name": "last_name",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "admin": {
+          "name": "admin",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    }
+  },
+  "enums": {},
+  "schemas": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "id": "5ba1ace6-232a-4c3c-ba0c-9b244b06fe1b",
+  "prevId": "00000000-0000-0000-0000-000000000000",
+  "version": "5",
+  "dialect": "pg",
+  "tables": {
+    "users": {
+      "name": "users",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "varchar(32)",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "first_name": {
+          "name": "first_name",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "last_name": {
+          "name": "last_name",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "admin": {
+          "name": "admin",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    }
+  },
+  "enums": {},
+  "schemas": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}
