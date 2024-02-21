@@ -2,10 +2,8 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { ClerkProvider } from '@clerk/nextjs'
 import { UserButton } from "@clerk/nextjs";
-
-
+import { Toaster } from "@/components/ui/toaster"
 import Link from 'next/link'
-import { User } from 'lucide-react'
 
 import './globals.css'
 
@@ -25,7 +23,7 @@ export default function RootLayout({
       <html lang="en">
         <body className={inter.className}>
           <div className="min-h-screen relative flex flex-col">
-            <header className="sticky top-0 w-full border-b border-border/40 shadow-sm">
+            <header className="top-0 w-full border-b border-border/40 shadow-sm">
               <div className="container flex flex-row w-mx-auto justify-center h-10 items-center">
                   <h1 className="text-xl font-medium mr-10"><Link href={'/'}>Whiskey Tasting</Link></h1>
 
@@ -35,6 +33,7 @@ export default function RootLayout({
               </div>
             </header>
             {children}
+            <Toaster />
           </div>
         </body>
       </html>

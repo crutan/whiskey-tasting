@@ -26,6 +26,7 @@ const formSchema = z.object({
   description: z.string(),
   blind: z.boolean(),
   date: z.date(),
+  flights: z.number()
 })
 
 type EditTastingFormProps = {
@@ -41,7 +42,8 @@ export const EditTastingForm = ({ closeCallback, tasting }: EditTastingFormProps
       name: tasting.name,
       description: tasting.description,
       blind: tasting.blind,
-      date: tasting.date
+      date: tasting.date,
+      flights: tasting.flights
     }
   })
 
@@ -84,6 +86,16 @@ export const EditTastingForm = ({ closeCallback, tasting }: EditTastingFormProps
             </FormControl>
           </FormItem>
         )}/>
+        <FormField name="flights" control={form.control} render={({field}) => (
+          <FormItem>
+            <FormLabel>Number of Flights</FormLabel>
+            <FormControl>
+              <Input type="number" placeholder="1" {...field} required onChange={event => field.onChange(+event.target.value)}/>
+            </FormControl>
+            <FormMessage/>
+
+          </FormItem>
+        )}/>
         <FormField name="date" control={form.control} render={({field}) => (
           <FormItem className="flex flex-col">
               <FormLabel>Date of Tasting</FormLabel>
@@ -118,9 +130,6 @@ export const EditTastingForm = ({ closeCallback, tasting }: EditTastingFormProps
                   />
                 </PopoverContent>
               </Popover>
-              <FormDescription>
-                Your date of birth is used to calculate your age.
-              </FormDescription>
               <FormMessage />
             </FormItem>
         )}/>

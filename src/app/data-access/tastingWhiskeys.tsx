@@ -8,6 +8,7 @@ export type TastingWhiskeyDTO = {
   tastingId: string
   whiskeyId: string
   position: number
+  flight: number
 }
 
 export async function getTastingWhiskeys(tasting: string) {
@@ -23,6 +24,10 @@ export async function getTastingWhiskeys(tasting: string) {
 
 export async function updateTastingWhiskeyPosition(id: string, position: number) {
   await db.update(tastingWhiskeys).set({ position: position }).where(eq(tastingWhiskeys.id, id))
+}
+
+export async function updateTastingWhiskeyFlight(id: string, flight: number) {
+  await db.update(tastingWhiskeys).set({ flight: flight}).where(eq(tastingWhiskeys.id, id))
 }
 
 export async function selectTastingWhiskey(tastingWhiskey: Omit<TastingWhiskeyDTO, 'id'>) {

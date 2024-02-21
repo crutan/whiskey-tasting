@@ -23,4 +23,4 @@ export type InferResultType<
 >
 
 export type TastingWhiskeyWithWhiskey = InferResultType<'tastingWhiskeys', { whiskey: true }>
-
+export type UserRatingWithWhiskeyandUser = InferResultType<'userRatings', { whiskey: true, user: true }>

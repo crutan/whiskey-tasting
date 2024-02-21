@@ -1,0 +1,1 @@
+ALTER TABLE "tastings" ALTER COLUMN "tastingState" SET NOT NULL;

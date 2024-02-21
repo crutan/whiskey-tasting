@@ -14,7 +14,7 @@ export default async function Home() {
     <main className="container w-full">
       <div className="hero w-full flex flex-row flex-1 h-64 border-2 border-stone-800 overflow-hidden">
         <h1 className="text-3xl font-semibold tracking-normal flex basis-1/2 justify-center items-center">Upcoming Tastings</h1>
-        <Image src="/whiskey_1280_853.jpg" alt="Whiskey Glass" height="853" width="1280" priority={true} className="basis-1/2 object-cover"/>
+        <Image src="/whiskey_1280_853.jpg" alt="Whiskey Glass" height="853" width="1280" priority={true} className="hidden lg:block basis-1/2 object-cover"/>
       </div>
       <TastingList tastings={tastings}/>
       

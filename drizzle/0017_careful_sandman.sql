@@ -1,0 +1,1 @@
+ALTER TABLE "tastings" ADD COLUMN "flights" integer DEFAULT 1;

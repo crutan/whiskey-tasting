@@ -1,17 +1,16 @@
 import Image from "next/image";
 import { currentUser } from '@clerk/nextjs';
-import { TastingDTO, dbToDTO, getTasting } from "@/app/data-access/tastings"
+import { TastingDTO, getTasting } from "@/app/data-access/tastings"
 import { getTastingWhiskeys } from "@/app/data-access/tastingWhiskeys"
-import { Button } from "@/components/ui/button";
 import { EditTastingSheet } from "./edit_tasting_sheet"
 import { TastingCard } from "@/app/tasting_card"
 import { Separator } from "@/components/ui/separator"
 
-import { unstable_cache } from 'next/cache';
 import { TastingWhiskeyList } from "./tastingWhiskeyList";
 import { getUnusedWhiskeys } from "@/app/data-access/whiskeys";
-import { AddWhiskey } from "./add_whiskey";
 import { AddOrSelectWhiskeys } from "./addOrSelectWhiskey";
+import { SignupToggle } from "./signupToggle";
+import { StartTasting } from "./startTasting";
 
 // const getCachedTasting = unstable_cache(
 //   async (id) => getTasting(id),
@@ -28,9 +27,13 @@ export default async function Page({ params }: { params: { id: string } }) {
   const whiskeys = await getTastingWhiskeys(params.id)
   const availableWhiskeys = await getUnusedWhiskeys(params.id)
   const user = await currentUser();
+  
+
+
   if (!tasting) {
     return (<div></div>)
   }
+
 
   
   return (
@@ -39,7 +42,7 @@ export default async function Page({ params }: { params: { id: string } }) {
       <div className="flex flex-col basis-1/2 justify-center items-center">
       <h1 className="text-3xl font-semibold tracking-normal ">Edit Tasting</h1>
       </div>
-      <Image src="/whiskey_1280_853.jpg" alt="Whiskey Glass" height="853" width="1280" priority={true} className="basis-1/2 object-cover"/>
+      <Image src="/whiskey_1280_853.jpg" alt="Whiskey Glass" height="853" width="1280" priority={true} className="hidden lg:block basis-1/2 object-cover"/>
     </div>
     
     <div className="container mt-6 mx-auto p-6">
@@ -56,13 +59,12 @@ export default async function Page({ params }: { params: { id: string } }) {
 
       <Separator className="my-8"/>
 
-      {tasting.hostId === user?.id && (
-        <div>
-          <h3 className="text-xl font-semibold tracking-normal">Remove Tasting:</h3>
-          <Button variant="destructive">Delete</Button>
-        </div>
+      {user?.id === tasting.hostId && tasting.state === "setup" && (
+        <SignupToggle tasting={tasting}/>
       )}
-
+      {user?.id === tasting.hostId && tasting.state === 'signup' && (
+        <StartTasting tasting={tasting}/>
+      )}
     </div>
 
     

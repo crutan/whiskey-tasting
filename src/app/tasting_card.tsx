@@ -37,13 +37,21 @@ export const TastingCard = ( { tasting, showFooter = true }: TastingCardProps ):
         <p>
           {tasting.description}
         </p>
+        <p>
+          This tasting will consist of {tasting.flights} flights
+        </p>
       </CardContent>
       {showFooter && (
       <CardFooter>
         {userId && tasting.hostId === userId && (
           <Link href={`/tastings/${tasting.id}/edit`}><Button variant='secondary'>Edit</Button></Link>
         )}
-        <Link href={`/tastings/${tasting.id}`}><Button>View</Button></Link>
+        {tasting.state === 'signup' && (
+          <Link href={`/tastings/${tasting.id}`}><Button>Sign Up for the Tasting</Button></Link>
+        )}
+        {tasting.state === 'started' && (
+          <Link href={`/tastings/${tasting.id}/rate`}><Button>Go To the Tasting!</Button></Link>
+        )}
       </CardFooter>
       )}
     </Card>

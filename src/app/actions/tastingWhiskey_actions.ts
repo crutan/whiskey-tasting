@@ -1,9 +1,9 @@
 "use server"
 
-import { TastingWhiskeyDTO, addTastingWhiskey, getTastingWhiskeys, removeTastingWhiskey, selectWhiskeyForTasting, updateTastingWhiskeyPosition } from "../data-access/tastingWhiskeys"
+import { TastingWhiskeyDTO, addTastingWhiskey, getTastingWhiskeys, removeTastingWhiskey, selectWhiskeyForTasting, updateTastingWhiskeyFlight, updateTastingWhiskeyPosition } from "../data-access/tastingWhiskeys"
 import { revalidatePath } from "next/cache"
 import { WhiskeyDTO } from "@/app/data-access/whiskeys"
-import { redirect } from 'next/navigation'
+
 
 
 function arraymove(arr: Array<any>, fromIndex:number, toIndex:number) {
@@ -59,4 +59,8 @@ export async function reOrderTastingWhiskeyAction(tastingId: string, movingWhisk
     updateTastingWhiskeyPosition(el.id, i+1)
   })
   revalidatePath(`/tastings/${tastingId}`)
+}
+
+export async function updateTastingWhiskeyFlightAction(id: string, flight: string) {
+  await updateTastingWhiskeyFlight(id, Number(flight))
 }
