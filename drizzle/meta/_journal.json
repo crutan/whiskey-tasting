@@ -176,6 +176,13 @@
       "when": 1708488418225,
       "tag": "0024_violet_terrax",
       "breakpoints": true
+    },
+    {
+      "idx": 25,
+      "version": "5",
+      "when": 1708560263731,
+      "tag": "0025_normal_tusk",
+      "breakpoints": true
     }
   ]
 }

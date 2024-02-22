@@ -11,23 +11,24 @@ import { Textarea } from "@/components/ui/textarea"
 import { ToastAction } from "@/components/ui/toast"
 import { useToast } from "@/components/ui/use-toast"
 import { updateUserRatingAction } from "@/app/actions/userRating_actions"
+import useEmblaCarousel, { UseEmblaCarouselType } from 'embla-carousel-react'
 
 
 type RatingCardProps = {
   userRating: UserRatingDTO
+  afterSave: () => void
 }
 
 const formSchema = z.object({
   id: z.string(),
   tastingId: z.string(),
-  rating: z.string().transform(Number).refine((n) => (1 <= n && n <= 10), { message: "Rating must be between 1 and 10" }),
+  rating: z.string().refine((n) => (1 <= Number(n) && Number(n) <= 10), { message: "Rating must be between 1 and 10" }),
   tastingNotes: z.string(),
   nosingNotes: z.string(),
 })
 
-export const RatingCard = ({ userRating }: RatingCardProps) => {
+export const RatingCard = ({ userRating, afterSave }: RatingCardProps) => {
   const { toast } = useToast()
-
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -35,7 +36,7 @@ export const RatingCard = ({ userRating }: RatingCardProps) => {
       tastingId: userRating.tastingId,
       tastingNotes: userRating.tastingNotes,
       nosingNotes: userRating.nosingNotes,
-      rating: Number(userRating.rating)
+      rating: userRating.rating
     }
   })
 
@@ -50,6 +51,7 @@ export const RatingCard = ({ userRating }: RatingCardProps) => {
     userRating.tastingNotes = evt.tastingNotes
     userRating.nosingNotes = evt.nosingNotes
     await updateUserRatingAction(userRating)
+    afterSave()
   }
 
   return (
@@ -64,7 +66,7 @@ export const RatingCard = ({ userRating }: RatingCardProps) => {
                   <FormItem>
                     <FormLabel>Rating</FormLabel>
                     <FormControl>
-                      <Input placeholder="" {...field} required />
+                      <Input placeholder="" {...field} required onFocus={(e) => { e.target.select()}}/>
                     </FormControl>
                     <FormMessage/>
                   </FormItem>

@@ -8,4 +8,5 @@ import { UserRatingDTO, updateUserRating } from "../data-access/userRatings"
 
 export async function updateUserRatingAction(userRating: UserRatingDTO) {
   await updateUserRating(userRating)
+  revalidatePath(`/tastings/${userRating.tastingId}/running`)
 }

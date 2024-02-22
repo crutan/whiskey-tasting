@@ -4,19 +4,14 @@ import { TastingDTO, getTasting } from '@/app/data-access/tastings'
 import { getTastingWhiskeys } from '@/app/data-access/tastingWhiskeys'
 import { currentUser } from '@clerk/nextjs'
 import { getUserRatings } from '@/app/data-access/userRatings'
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel"
-import { RatingCard } from './ratingCard'
+import { RatingsCarousel } from './carousel'
+
 
 
 export default async function Page({ params }: { params: { id: string } }) {
   const tasting: TastingDTO | null = await getTasting(params.id)
   const ratings = await getUserRatings(params.id)
+
   if (!ratings) {
     return (<div>Not found</div>)
   }
@@ -31,19 +26,7 @@ export default async function Page({ params }: { params: { id: string } }) {
       </div>
       
       <div className="container mt-6 mx-auto p-6">
-        Ratings:
-        <Carousel className="w-full" opts={{ loop: true }}>
-          <CarouselContent>
-            {ratings.map((rating) => (
-              <CarouselItem key={rating.position}>
-                <RatingCard userRating={rating}/>
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-          <CarouselPrevious />
-          <CarouselNext />
-        </Carousel>
-          
+        <RatingsCarousel ratings={ratings}/>          
       </div>
     </main>
   )

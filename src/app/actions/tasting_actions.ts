@@ -1,6 +1,6 @@
 "use server"
 
-import { attendTasting, checkAttendence, createTasting, markTastingStateSetup, markTastingStateSignup, markTastingStateStarted, updateTasting } from "@/app/data-access/tastings"
+import { attendTasting, checkAttendence, createTasting, markTastingStateFinished, markTastingStateSetup, markTastingStateSignup, markTastingStateStarted, updateTasting } from "@/app/data-access/tastings"
 import { TastingDTO } from "../data-access/tastings"
 import { revalidatePath } from "next/cache"
 import { redirect } from 'next/navigation'
@@ -45,4 +45,10 @@ export async function attendTastingAction(tastingId: string): Promise<void> {
 
 export async function redirectToRate(tastingId: string) {
   redirect(`/tastings/${tastingId}/rate`)
+}
+
+export async function finishTastingAction(tastingId: string) {
+  await markTastingStateFinished(tastingId)
+  revalidatePath(`/tastings/${tastingId}`)
+  redirect(`/tastings/${tastingId}/finished`)
 }

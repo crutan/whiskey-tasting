@@ -13,6 +13,11 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { cn } from '@/lib/utils'
+import { Separator } from '@/components/ui/separator'
+import { Button } from '@/components/ui/button'
+import { finishTastingAction } from '@/app/actions/tasting_actions'
+import { currentUser } from '@clerk/nextjs'
+import { FinishTasting } from './finishTasting'
 
 type WhiskeyTableRowProps = {
   rowData: UserRatingWithWhiskeyandUser[]
@@ -29,8 +34,21 @@ const WhiskeyTableRow = ( { rowData, nextRow }: WhiskeyTableRowProps ) => {
     <TableRow className={styles}>
       <TableCell>{rowData[0].flight}</TableCell>
       <TableCell>{rowData[0].whiskey.distillery} {rowData[0].whiskey.name}</TableCell>
-      <TableCell className="hidden lg:table-cell">{completedRatings.length}</TableCell>
-      <TableCell className="hidden lg:table-cell">{uncompleteRatings.length}</TableCell>
+      <TableCell className="hidden md:table-cell">
+        <ol>
+          {completedRatings.map((r) => (
+            <li key={r.id}>{r.user.firstName} {r.user.lastName}: {r.rating}</li>
+          ))}
+        </ol>
+      
+      </TableCell>
+      <TableCell className="hidden md:table-cell">
+        <ol>
+          {uncompleteRatings.map((r) => (
+            <li key={r.id}>{r.user.firstName} {r.user.lastName}</li>
+          ))}
+        </ol>
+      </TableCell>
       <TableCell className="table-cell lg:hidden">{completedRatings.length} / {uncompleteRatings.length}</TableCell>
       <TableCell>{averageRating}</TableCell>
     </TableRow>
@@ -41,10 +59,17 @@ const WhiskeyTableRow = ( { rowData, nextRow }: WhiskeyTableRowProps ) => {
 export default async function Page({ params }: { params: { id: string } }) {
   const tasting: TastingDTO | null = await getTasting(params.id)
   const matrix: UserRatingWithWhiskeyandUser[][] = await getTastingMatrix(params.id)
+  const user = await currentUser()
 
   if (!tasting) {
     return (<div>Not found</div>)
   }
+
+  if (user && tasting.hostId !== user.id) {
+    return (<div>Not Permitted</div>)
+  }
+
+
 
   return (
     <main className="container w-full">
@@ -62,9 +87,9 @@ export default async function Page({ params }: { params: { id: string } }) {
             <TableRow>
               <TableHead>Flight</TableHead>
               <TableHead>Whiskey</TableHead>
-              <TableHead className="hidden lg:table-cell">Ratings Complete</TableHead>
-              <TableHead className="hidden lg:table-cell">Ratings Incomplete</TableHead>
-              <TableHead className="table-cell lg:hidden">C/I</TableHead>
+              <TableHead className="hidden md:table-cell">Ratings Complete</TableHead>
+              <TableHead className="hidden md:table-cell">Ratings Incomplete</TableHead>
+              <TableHead className="table-cell md:hidden">C/I</TableHead>
               <TableHead>Average Rating</TableHead>
             </TableRow>
           </TableHeader>
@@ -74,6 +99,9 @@ export default async function Page({ params }: { params: { id: string } }) {
         ))}
           </TableBody>
         </Table>
+        <Separator/>
+        <h3 className="text-xl font-semibold">Finish Tasting</h3>
+        <FinishTasting tasting={tasting}/>
       </div>
     </main>
   )

@@ -101,7 +101,7 @@ export const userRatings = pgTable('user_ratings', {
   whiskeyId: uuid('whiskey_id').references(()=> whiskeys.id).notNull(),
   flight: integer('flight').notNull().default(1),
   position: integer('position').notNull().default(1),
-  rating: decimal('rating', { precision: 2, scale: 1 }),
+  rating: decimal('rating', { precision: 3, scale: 1 }),
   tastingNotes: text('tasting_notes'),
   nosingNotes: varchar('nosing_notes'),
 })
