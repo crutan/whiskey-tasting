@@ -1,6 +1,6 @@
 import { db } from '@/db'
 import { tastings, tastingAttendees, tastingWhiskeys, Tasting, tastingStateEnum, userRatings, users } from '@/db/schema';
-import { and, asc, eq, gte, sql } from 'drizzle-orm'
+import { and, asc, eq, gte, ne, sql } from 'drizzle-orm'
 import { currentUser } from '@clerk/nextjs';
 export type TastingDTO = {
   id: string
@@ -47,7 +47,7 @@ export async function getTasting(id: string) {
 
 export async function getUpcomingTastings() {
   return db.query.tastings.findMany({ 
-    where: sql`date >= DATE_TRUNC('day', CURRENT_DATE)`,
+    where: and(sql`date >= DATE_TRUNC('day', CURRENT_DATE)`, ne(tastings.state, 'finished')),
     orderBy: [asc(tastings.date)] 
   }) 
 }
