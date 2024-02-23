@@ -1,6 +1,6 @@
 import { db } from '@/db'
 import { users } from '@/db/schema';
-import { asc, ne } from 'drizzle-orm'
+import { asc, eq, ne } from 'drizzle-orm'
 
 export async function getAllUsers(except?: string) {
   if (except) {
@@ -11,4 +11,8 @@ export async function getAllUsers(except?: string) {
   } else {
     return db.query.users.findMany({ orderBy: [asc(users.lastName), asc(users.firstName)]})
   }
+}
+
+export async function getUser(id: string) {
+  return db.query.users.findFirst({ where: eq(users.id, id)})
 }

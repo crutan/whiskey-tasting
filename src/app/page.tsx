@@ -3,12 +3,21 @@ import { currentUser } from '@clerk/nextjs';
 import { getUpcomingTastings } from "./data-access/tastings"
 import { TastingList } from "./tasting_list"
 import { AddTastingSheet } from "./add_tasting_sheet"
+import { getUser } from "./data-access/users";
 
 
 export default async function Home() {
 
   const user = await currentUser();
   const tastings = await getUpcomingTastings()
+  
+  let admin = false
+  if (user) {
+    const localUser = await getUser(user.id)
+    if (localUser) {
+      admin = localUser.admin || false
+    }
+  }
 
   return (
     <main className="container w-full">
@@ -18,9 +27,11 @@ export default async function Home() {
       </div>
       <TastingList tastings={tastings}/>
       
+      {admin && (
       <div className="mt-6 mx-auto p-6">
         <AddTastingSheet/>
       </div>
+      )}
     </main>
   );
 }
