@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { currentUser } from '@clerk/nextjs';
-import { TastingDTO, getTasting } from "@/app/data-access/tastings"
+import { TastingDTO, getAttendees, getTasting } from "@/app/data-access/tastings"
 import { getTastingWhiskeys } from "@/app/data-access/tastingWhiskeys"
 import { EditTastingSheet } from "./edit_tasting_sheet"
 import { TastingCard } from "@/app/tasting_card"
@@ -27,7 +27,7 @@ export default async function Page({ params }: { params: { id: string } }) {
   const whiskeys = await getTastingWhiskeys(params.id)
   const availableWhiskeys = await getUnusedWhiskeys(params.id)
   const user = await currentUser();
-  
+  const attendees = await getAttendees(params.id)
 
 
   if (!tasting) {
@@ -63,7 +63,16 @@ export default async function Page({ params }: { params: { id: string } }) {
         <SignupToggle tasting={tasting}/>
       )}
       {user?.id === tasting.hostId && tasting.state === 'signup' && (
-        <StartTasting tasting={tasting}/>
+        <div>
+          <h3 className="text-xl font-semibold">Attendees</h3>
+          <ol>
+            {attendees.map((u) => (
+              <li key={u.id}>{u.firstName} {u.lastName}</li>
+            ))}
+          </ol>
+          <Separator/>
+          <StartTasting tasting={tasting}/>
+        </div>
       )}
     </div>
 
