@@ -20,6 +20,7 @@ import {
 import { Card, CardContent } from '@/components/ui/card'
 import { UserRatingWithWhiskeyandUser } from '@/types'
 import { TastingDTO } from "@/app/data-access/tastings"
+import { cn } from "@/lib/utils"
 
 
 type HostCompleteProps = {
@@ -32,6 +33,22 @@ type WhiskeyCarouselContentProps = {
 }
 
 const WhiskeyCarouselContent = ( { rowData }: WhiskeyCarouselContentProps ) => {
+
+  const maxRating = Math.max.apply(null, rowData.map((r) => Number(r.rating)))
+  const minRating = Math.min.apply(null, rowData.map((r) => Number(r.rating)))
+
+  const rowClass = (r: UserRatingWithWhiskeyandUser) => {
+    console.log(" Looking at ", r)
+    if (maxRating === minRating) {
+      return ''
+    }
+    if (Number(r.rating) === maxRating) {
+      return 'bg-green-200'
+    }
+    if (Number(r.rating) == minRating) {
+      return 'bg-red-200'
+    }
+  }
 
   return (
     <CarouselItem>
@@ -65,7 +82,7 @@ const WhiskeyCarouselContent = ( { rowData }: WhiskeyCarouselContentProps ) => {
               </TableHeader>
               <TableBody>
                 {rowData.map((r) => (
-                  <TableRow key={r.id}>
+                  <TableRow key={r.id} className={cn(rowClass(r))}>
                     <TableCell>{r.user.firstName} {r.user.lastName}</TableCell>
                     <TableCell>{r.rating}</TableCell>
                   </TableRow>

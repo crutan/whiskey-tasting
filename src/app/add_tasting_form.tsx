@@ -87,7 +87,7 @@ export const AddTastingForm = ({ closeCallback }: AddTastingFormProps ) => {
           <FormItem>
             <FormLabel>Number of Flights</FormLabel>
             <FormControl>
-              <Input placeholder="1" {...field} required/>
+              <Input placeholder="1" {...field} required onChange={event => field.onChange(+event.target.value)}/>
             </FormControl>
           </FormItem>
         )}/>

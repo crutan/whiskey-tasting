@@ -47,7 +47,7 @@ export async function getTasting(id: string) {
 
 export async function getUpcomingTastings() {
   return db.query.tastings.findMany({ 
-    where: sql`date >= CURRENT_DATE`,
+    where: sql`date >= DATE_TRUNC('day', CURRENT_DATE)`,
     orderBy: [asc(tastings.date)] 
   }) 
 }
