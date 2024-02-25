@@ -78,6 +78,8 @@ const WhiskeyCarouselContent = ( { rowData }: WhiskeyCarouselContentProps ) => {
                 <TableRow>
                   <TableHead>Taster</TableHead>
                   <TableHead>Rating</TableHead>
+                  <TableHead>Nosing Notes</TableHead>
+                  <TableHead>Tasting Notes</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -85,6 +87,8 @@ const WhiskeyCarouselContent = ( { rowData }: WhiskeyCarouselContentProps ) => {
                   <TableRow key={r.id} className={cn(rowClass(r))}>
                     <TableCell>{r.user.firstName} {r.user.lastName}</TableCell>
                     <TableCell>{r.rating}</TableCell>
+                    <TableCell>{r.nosingNotes}</TableCell>
+                    <TableCell>{r.tastingNotes}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>

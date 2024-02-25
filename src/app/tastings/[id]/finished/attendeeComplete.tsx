@@ -49,6 +49,8 @@ const WhiskeyTableRow = ( { rowData, userId, min, max }: WhiskeyTableRowProps ) 
       <TableCell>{myRow.whiskey.ageStatement}</TableCell>
       <TableCell>{myRow.whiskey.abv} %</TableCell>
       <TableCell>{myRow.rating}</TableCell>
+      <TableCell>{myRow.nosingNotes}</TableCell>
+      <TableCell>{myRow.tastingNotes}</TableCell>
     </TableRow>
   )
 }
@@ -82,6 +84,8 @@ export const AttendeeComplete = ({ matrix, tasting, userId }: AttendeeCompletePr
               <TableHead>Age</TableHead>
               <TableHead>ABV</TableHead>
               <TableHead>Rating</TableHead>
+              <TableHead>Nosing Notes</TableHead>
+              <TableHead>Tasting Notes</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
